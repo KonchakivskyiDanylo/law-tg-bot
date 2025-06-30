@@ -65,7 +65,7 @@ class IntegratedDocumentGenerator:
             response = await self.create_openai_completion(
                 messages=[
                     {"role": "system", "content": DOCUMENT_COMPLETENESS_EVALUATION_PROMPT},
-                    {"role": "user", "content": f"Запрос пользователя: {messages[-1].get('content', '')}"}
+                    {"role": "user", "content": f"Request: {messages[-1].get('content', '')}"}
                 ],
                 response_format={"type": "json_object"}
             )
@@ -558,7 +558,7 @@ class ApplicationTemplate(DocumentTemplate):
             self.add_paragraph(json_data["recipient"], alignment=WD_PARAGRAPH_ALIGNMENT.RIGHT)
 
         if json_data.get("sender"):
-            self.add_paragraph(f"от {json_data['sender']}", alignment=WD_PARAGRAPH_ALIGNMENT.RIGHT)
+            self.add_paragraph(f"from {json_data['sender']}", alignment=WD_PARAGRAPH_ALIGNMENT.RIGHT)
 
         self.doc.add_paragraph()
 
@@ -838,7 +838,7 @@ class PowerOfAttorneyTemplate(DocumentTemplate):
         paragraph = cell.paragraphs[0]
         paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
 
-        run = paragraph.add_run("________________________ / ________________________\n«___» _____________ 2025 г.")
+        run = paragraph.add_run("________________________ / ________________________\n«___» _____________ 2025 y.")
         run.font.size = Pt(10)
 
 
@@ -868,7 +868,7 @@ class ReportTemplate(DocumentTemplate):
             table = self.doc.add_table(rows=1, cols=4)
             table.style = "Table Grid"
             hdr_cells = table.rows[0].cells
-            hdr_cells[0].text = "№ п/п"
+            hdr_cells[0].text = "№"
             hdr_cells[1].text = "Information Name"
             hdr_cells[2].text = "Number of Contracts"
             hdr_cells[3].text = "Contract Amount"
@@ -881,7 +881,7 @@ class ReportTemplate(DocumentTemplate):
                 row_cells[3].text = item.get("total_amount", "")
 
         if json_data.get("executor_info"):
-            self.doc.add_paragraph()  # отступ
+            self.doc.add_paragraph()
             self.add_paragraph(f"Executor: {json_data['executor_info']}", alignment=WD_PARAGRAPH_ALIGNMENT.LEFT)
 
         if json_data.get("appendices"):
@@ -891,7 +891,7 @@ class ReportTemplate(DocumentTemplate):
 
         if json_data.get("stamp_area"):
             self.doc.add_paragraph()
-            self.add_paragraph("(М.П.)", alignment=WD_PARAGRAPH_ALIGNMENT.RIGHT, indent_first_line=False)
+            self.add_paragraph("(STAMP)", alignment=WD_PARAGRAPH_ALIGNMENT.RIGHT, indent_first_line=False)
 
 
 class ProtocolTemplate(DocumentTemplate):
@@ -950,10 +950,9 @@ class ProtocolTemplate(DocumentTemplate):
                 r = right_lines[i] if i < len(right_lines) else ""
                 self.add_table_row(left_text=l, right_text=r)
 
-        # Печать
         if json_data.get("stamp_area"):
             self.add_paragraph()
-            self.add_paragraph("(М.П.)", alignment=WD_PARAGRAPH_ALIGNMENT.RIGHT)
+            self.add_paragraph("(STAMP)", alignment=WD_PARAGRAPH_ALIGNMENT.RIGHT)
 
 
 class DocumentTemplateFactory:
