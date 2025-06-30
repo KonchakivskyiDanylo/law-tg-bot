@@ -68,7 +68,7 @@ def create_payment(user_id, tariff_type, return_url=None):
                 "return_url": return_url or f"{BOT_URL}?start=payment_success"
             },
             "capture": True,
-            "description": f"Подписка {tariff_type.capitalize()} на юридический бот",
+            "description": f"{tariff_type.capitalize()} subscription for the legal bot",
             "metadata": {
                 "user_id": user_id,
                 "tariff_type": tariff_type
