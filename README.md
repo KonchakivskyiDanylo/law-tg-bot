@@ -2,6 +2,8 @@
 
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
+
 **A Telegram bot providing AI-powered legal consultations, automated legal document generation, and subscription/payment
 management.**
 
